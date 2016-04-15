@@ -24,6 +24,10 @@ class Callback_Util {
             self::loadFile($file);
         }
 
+        if (is_callable($callback)) {
+            return $callback;
+        }
+
         if (is_array($callback)) {
 
             $originalClass = array_shift($callback);
@@ -37,10 +41,6 @@ class Callback_Util {
                     $callback = array(new $originalClass, $method->name);
                 }
             }
-        }
-
-        if (is_callable($callback)) {
-            return $callback;
         }
 
         throw new Exceptions\InvalidCallbackException('Invalid callback');
